@@ -9,9 +9,12 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>ros2_ublox</exec_depend>
+  <exec_depend>ublox_serialization</exec_depend>
   <exec_depend>ublox_msgs</exec_depend>
+  <exec_depend>ublox_gps</exec_depend>
+  <exec_depend>ntrip_client</exec_depend>
 
+  <!-- The export tag contains other, unspecified, tags -->
   <export>
     <build_type>ament_cmake</build_type>
   </export>
