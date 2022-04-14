@@ -3,15 +3,16 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+
 def generate_launch_description():
       return LaunchDescription([
             # Declare arguments with default values
-            DeclareLaunchArgument('host',         default_value='20.185.11.35'),
+            DeclareLaunchArgument('host',         default_value='35.172.10.77'),
             DeclareLaunchArgument('port',         default_value='2101'),
-            DeclareLaunchArgument('mountpoint',   default_value='VTRI_RTCM3'),
+            DeclareLaunchArgument('mountpoint',   default_value='SCSC'),
             DeclareLaunchArgument('authenticate', default_value='True'),
-            DeclareLaunchArgument('username',     default_value='user'),
-            DeclareLaunchArgument('password',     default_value='pass'),
+            DeclareLaunchArgument('username',     default_value='ntrip_dev'),
+            DeclareLaunchArgument('password',     default_value='EY7opuvk'),
 
            # ****************************************************************** 
            # NTRIP Client Node
