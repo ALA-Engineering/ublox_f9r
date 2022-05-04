@@ -47,13 +47,15 @@
 #include <ublox_msgs/msg/aid_hui.hpp>
 #include <ublox_msgs/msg/cfg_inf.hpp>
 #include <ublox_msgs/msg/cfg_inf_block.hpp>
-#include <ublox_msgs/msg/cfg_nav5.hrtcpp>
+#include <ublox_msgs/msg/cfg_nav5.hpp>
 #include <ublox_msgs/msg/cfg_prt.hpp>
 #include <ublox_msgs/msg/inf.hpp>
 #include <ublox_msgs/msg/mon_ver.hpp>
 #include <ublox_msgs/msg/nav_clock.hpp>
 #include <ublox_msgs/msg/nav_posecef.hpp>
 #include <ublox_msgs/msg/nav_status.hpp>
+
+#include <mavros_msgs/msg/rtcm.hpp>
 
 #include <ublox_gps/adr_udr_product.hpp>
 #include <ublox_gps/fix_diagnostic.hpp>
