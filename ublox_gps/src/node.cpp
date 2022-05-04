@@ -55,8 +55,6 @@
 #include <ublox_msgs/msg/nav_posecef.hpp>
 #include <ublox_msgs/msg/nav_status.hpp>
 
-#include <mavros_msgs/msg/rtcm.hpp>
-
 #include <ublox_gps/adr_udr_product.hpp>
 #include <ublox_gps/fix_diagnostic.hpp>
 
@@ -204,6 +202,41 @@ void UbloxNode::addProductInterface(const std::string & product_category,
   } 
 }
 
+
+void UbloxNode::velmsgCallback(
+  const geometry_msgs::msg::Twist::SharedPtr msg) {
+
+}
+
+void UbloxNode::msgCallback(
+  const mavros_msgs::msg::RTCM::SharedPtr msg) {
+
+  RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs : %d", msg->data.size());
+
+  rtcm_ids.insert(rtcm_ids.begin(),std::begin(msg->data), std::end(msg->data));
+
+
+
+  if (rtcm_ids.size() != rtcm_rates.size()) {
+    throw std::runtime_error(std::string("Invalid settings: size of rtcm_ids") +
+                             " must match size of rtcm_rates");
+  }
+
+  rtcms_.resize(rtcm_ids.size());
+  for (size_t i = 0; i < rtcm_ids.size(); ++i) {
+    if (rtcm_ids[i] < 0 || rtcm_ids[i] > 255) {
+      throw std::runtime_error("RTCM IDs must be between 0 and 255");
+    }
+    if (rtcm_rates[i] < 0 || rtcm_rates[i] > 255) {
+      throw std::runtime_error("RTCM rates must be between 0 and 255");
+    }
+    rtcms_[i].id = rtcm_ids[i];
+    rtcms_[i].rate = rtcm_rates[i];
+  }
+
+
+}
+
 void UbloxNode::getRosParams() {
   device_ = this->declare_parameter("device", std::string("/dev/ttyACM0"));
   frame_id_ = this->declare_parameter("frame_id", std::string("gps"));
@@ -245,27 +278,15 @@ void UbloxNode::getRosParams() {
   // RTCM params
   this->declare_parameter("rtcm.ids");
   this->declare_parameter("rtcm.rates");
-  std::vector<int64_t> rtcm_ids;
-  std::vector<int64_t> rtcm_rates;
+ 
   this->get_parameter("rtcm.ids", rtcm_ids);
   this->get_parameter("rtcm.rates", rtcm_rates);
 
-  if (rtcm_ids.size() != rtcm_rates.size()) {
-    throw std::runtime_error(std::string("Invalid settings: size of rtcm_ids") +
-                             " must match size of rtcm_rates");
-  }
+  rtcm_data_stream_sub_ = this->create_subscription<mavros_msgs::msg::RTCM>("rtcm", rclcpp::QoS(100),
+          std::bind(&UbloxNode::msgCallback, this, std::placeholders::_1));
 
-  rtcms_.resize(rtcm_ids.size());
-  for (size_t i = 0; i < rtcm_ids.size(); ++i) {
-    if (rtcm_ids[i] < 0 || rtcm_ids[i] > 255) {
-      throw std::runtime_error("RTCM IDs must be between 0 and 255");
-    }
-    if (rtcm_rates[i] < 0 || rtcm_rates[i] > 255) {
-      throw std::runtime_error("RTCM rates must be between 0 and 255");
-    }
-    rtcms_[i].id = rtcm_ids[i];
-    rtcms_[i].rate = rtcm_rates[i];
-  }
+  dead_reconk_velocity_data_ = this->create_subscription<geometry_msgs::msg::Twist>("velocity_data", rclcpp::QoS(100),
+          std::bind(&UbloxNode::velmsgCallback, this, std::placeholders::_1));
 
   // PPP: Advanced Setting
   this->declare_parameter("enable_ppp", false);

@@ -49,6 +49,11 @@
 #include <ublox_gps/rtcm.hpp>
 #include <ublox_gps/raw_data_pa.hpp>
 
+#include <mavros_msgs/msg/rtcm.hpp>
+
+#include <geometry_msgs/msg/twist.hpp>
+
+
 // This file also declares UbloxNode which is the main class and ros node. It
 // implements functionality which applies to any u-blox device, regardless of
 // the firmware version or product type.  The class is designed in compositional
@@ -96,6 +101,10 @@ class UbloxNode final : public rclcpp::Node {
   //! Minimum Time Stamp Status for fix frequency diagnostic
   const double kTimeStampStatusMin = 0;
 
+  std::vector<int64_t> rtcm_ids;
+  std::vector<int64_t> rtcm_rates;
+
+
   /**
    * @brief Initialize and run the u-blox node.
    */
@@ -135,6 +144,10 @@ class UbloxNode final : public rclcpp::Node {
   void printInf(const ublox_msgs::msg::Inf &m, uint8_t id);
 
  private:
+
+  void msgCallback(const mavros_msgs::msg::RTCM::SharedPtr msg);
+  void velmsgCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
+
 
   /**
    * @brief Initialize the I/O handling.
@@ -257,6 +270,11 @@ class UbloxNode final : public rclcpp::Node {
   rclcpp::Publisher<ublox_msgs::msg::AidALM>::SharedPtr aid_alm_pub_;
   rclcpp::Publisher<ublox_msgs::msg::AidEPH>::SharedPtr aid_eph_pub_;
   rclcpp::Publisher<ublox_msgs::msg::AidHUI>::SharedPtr aid_hui_pub_;
+
+  rclcpp::Subscription<mavros_msgs::msg::RTCM>::SharedPtr rtcm_data_stream_sub_;
+
+  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr dead_reconk_velocity_data_;
+
 
   //! Navigation rate in measurement cycles, see CfgRate.msg
   uint16_t nav_rate_{0};
