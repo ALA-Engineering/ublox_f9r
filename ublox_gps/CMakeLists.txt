@@ -49,6 +49,7 @@ ament_target_dependencies(ublox_gps
   "rclcpp"
   "rclcpp_components"
   "sensor_msgs"
+  "mavros_msgs"
   "std_msgs"
   "tf2"
   "ublox_msgs"

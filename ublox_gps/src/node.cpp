@@ -47,7 +47,7 @@
 #include <ublox_msgs/msg/aid_hui.hpp>
 #include <ublox_msgs/msg/cfg_inf.hpp>
 #include <ublox_msgs/msg/cfg_inf_block.hpp>
-#include <ublox_msgs/msg/cfg_nav5.hpp>
+#include <ublox_msgs/msg/cfg_nav5.hrtcpp>
 #include <ublox_msgs/msg/cfg_prt.hpp>
 #include <ublox_msgs/msg/inf.hpp>
 #include <ublox_msgs/msg/mon_ver.hpp>

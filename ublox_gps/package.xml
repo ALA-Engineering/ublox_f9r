@@ -25,6 +25,8 @@
   <depend>std_msgs</depend>
   <depend>tf2</depend>
   <depend>ublox_msgs</depend>
+  <depend>mavros_msgs</depend>
+  <depend>nmea_msgs</depend>
   <depend>ublox_serialization</depend>
 
   <export>

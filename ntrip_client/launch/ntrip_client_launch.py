@@ -6,12 +6,12 @@ from launch_ros.actions import Node
 def generate_launch_description():
       return LaunchDescription([
             # Declare arguments with default values
-            DeclareLaunchArgument('host',         default_value='20.185.11.35'),
+            DeclareLaunchArgument('host',         default_value='35.172.10.77'),
             DeclareLaunchArgument('port',         default_value='2101'),
-            DeclareLaunchArgument('mountpoint',   default_value='VTRI_RTCM3'),
+            DeclareLaunchArgument('mountpoint',   default_value='SCSC'),
             DeclareLaunchArgument('authenticate', default_value='True'),
-            DeclareLaunchArgument('username',     default_value='user'),
-            DeclareLaunchArgument('password',     default_value='pass'),
+            DeclareLaunchArgument('username',     default_value='ntrip_dev'),
+            DeclareLaunchArgument('password',     default_value='EY7opuvk'),
 
            # ****************************************************************** 
            # NTRIP Client Node
@@ -36,7 +36,7 @@ def generate_launch_description():
                      'password': LaunchConfiguration('password'),
 
                      # Not sure if this will be looked at by other ndoes, but this frame ID will be added to the RTCM messages published by this node
-                     'rtcm_frame_id': 'odom'
+                     'rtcm_frame_id': 'gps'
                    }
                  ],
                  # Uncomment the following section and replace "/gq7/nmea/sentence" with the topic you are sending NMEA on if it is not the one we requested
