@@ -17,7 +17,18 @@ $ colcon build
 $ source install/setup.bash
 
 
-Open other terminal for ntrip client
+# Open other terminal for ntrip client
+
+    ROS node that will communicate with an NTRIP server to receive RTCM connections and publish them on a ROS topic.
+
+    ros2 launch ntrip_client ntrip_client_launch.py
+
+
+    Published Topics
+
+    rtcm (mavros_msgs/RTCM)
+    
+    RTCM corrections received from NTRIP server. Only messages whose checksums have passed validation are sent. The messages contain the raw RTCM bytes including the checksum
 
 
 
