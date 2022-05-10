@@ -284,7 +284,7 @@ void UbloxNode::getRosParams() {
   this->get_parameter("rtcm.ids", rtcm_ids);
   this->get_parameter("rtcm.rates", rtcm_rates);
 
-  rtcm_data_stream_sub_ = this->create_subscription<mavros_msgs::msg::RTCM>("rtcm", rclcpp::QoS(100),
+  rtcm_data_stream_sub_ = this->create_subscription<mavros_msgs::msg::RTCM>("/ntrip_client/rtcm", rclcpp::QoS(100),
           std::bind(&UbloxNode::msgCallback, this, std::placeholders::_1));
 
   dead_reconk_velocity_data_ = this->create_subscription<geometry_msgs::msg::Twist>("velocity_data", rclcpp::QoS(100),
