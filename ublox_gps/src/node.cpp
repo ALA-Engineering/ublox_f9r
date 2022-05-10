@@ -213,6 +213,8 @@ void UbloxNode::msgCallback(
 
   RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs : %d", msg->data.size());
 
+  rtcm_ids.resize(msg->data.size());
+
   rtcm_ids.insert(rtcm_ids.begin(),std::begin(msg->data), std::end(msg->data));
 
   rtcm_rates.resize(msg->data.size(),1);
