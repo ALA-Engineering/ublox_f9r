@@ -215,13 +215,13 @@ void UbloxNode::msgCallback(
 
   rtcm_ids.resize(msg->data.size());
 
-  rtcm_ids.insert(rtcm_ids.begin(),std::begin(msg->data), std::end(msg->data));
+  // rtcm_ids.insert(rtcm_ids.begin(),std::begin(msg->data), std::end(msg->data));
 
   RCLCPP_INFO(this->get_logger(), "\n\n");
-  
+
   for (size_t j = 0; j < msg->data.size(); ++j) {
     RCLCPP_INFO(this->get_logger(), " %d  ", msg->data[j]);
-    rtcm_ids[j].push_back(msg->data[j]);
+    rtcm_ids.insert(rtcm_ids.begin()+j,msg->data[j]);
   }
   RCLCPP_INFO(this->get_logger(), "\n\n");
   rtcm_rates.resize(msg->data.size(),1);
