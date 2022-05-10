@@ -219,6 +219,10 @@ void UbloxNode::msgCallback(
 
   fill(rtcm_rates.begin() , rtcm_rates.end() , 1);
 
+
+  RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs 1: %d", rtcm_ids.size());
+  RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs 2: %d", rtcm_rates.size());
+
   if (rtcm_ids.size() != rtcm_rates.size()) {
     throw std::runtime_error(std::string("Invalid settings: size of rtcm_ids") +
                              " must match size of rtcm_rates");
