@@ -30,7 +30,7 @@ ublox_gps_node:
                                 # disabled
       min_dur: 300              # Survey-In Minimum Duration [s]
       acc_lim: 3.0              # Survey-In Accuracy Limit [m]
-      
+
     gnss:
       glonass: true             
       beidou: false            
@@ -47,7 +47,6 @@ ublox_gps_node:
       aid:
         hui: true
       esf:
-        meas: true
-
+        all: true
       nav:
         posecef: false

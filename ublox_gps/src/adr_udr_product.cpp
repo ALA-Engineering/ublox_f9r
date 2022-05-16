@@ -28,14 +28,14 @@ namespace ublox_node {
 AdrUdrProduct::AdrUdrProduct(uint16_t nav_rate, uint16_t meas_rate, const std::string & frame_id, std::shared_ptr<diagnostic_updater::Updater> updater, rclcpp::Node* node)
   : use_adr_(false), nav_rate_(nav_rate), meas_rate_(meas_rate), frame_id_(frame_id), updater_(updater), node_(node)
 {
-  if (getRosBoolean(node_, "publish.esf.meas")) {
+  //if (getRosBoolean(node_, "publish.esf.meas")) {
     imu_pub_ =
       node_->create_publisher<sensor_msgs::msg::Imu>("imu", 1);
     time_ref_pub_ =
       node_->create_publisher<sensor_msgs::msg::TimeReference>("interrupt_time", 1);
 
     esf_meas_pub_ = node_->create_publisher<ublox_msgs::msg::EsfMEAS>("esfmeas", 1);
-  }
+ // }
   if (getRosBoolean(node_, "publish.nav.att")) {
     nav_att_pub_ = node_->create_publisher<ublox_msgs::msg::NavATT>("navatt", 1);
   }
@@ -84,14 +84,14 @@ void AdrUdrProduct::subscribe(std::shared_ptr<ublox_gps::Gps> gps) {
   }
 
   // Subscribe to ESF Meas messages
-  if (getRosBoolean(node_, "publish.esf.meas")) {
+  //if (getRosBoolean(node_, "publish.esf.meas")) {
     gps->subscribe<ublox_msgs::msg::EsfMEAS>([this](const ublox_msgs::msg::EsfMEAS &m) { esf_meas_pub_->publish(m); },
                                         1);
 
     // also publish sensor_msgs::Imu
     gps->subscribe<ublox_msgs::msg::EsfMEAS>(std::bind(
       &AdrUdrProduct::callbackEsfMEAS, this, std::placeholders::_1), 1);
-  }
+//  }
 
   // Subscribe to ESF Raw messages
   if (getRosBoolean(node_, "publish.esf.raw")) {
@@ -113,7 +113,7 @@ void AdrUdrProduct::subscribe(std::shared_ptr<ublox_gps::Gps> gps) {
 }
 
 void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
-  if (getRosBoolean(node_, "publish.esf.meas")) {
+  //if (getRosBoolean(node_, "publish.esf.meas")) {
     imu_.header.stamp = node_->now();
     imu_.header.frame_id = frame_id_;
 
@@ -200,7 +200,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
       time_ref_pub_->publish(t_ref_);
       imu_pub_->publish(imu_);
     }
-  }
+  //}
 
   updater_->force_update();
 }
