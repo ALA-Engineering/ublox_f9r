@@ -179,8 +179,8 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
       } else if (data_type == 12) {
         // RCLCPP_INFO("Temperature in celsius: %f", data_value * deg_c);
       } else {
-        RCLCPP_INFO(node_->get_logger(), "data_type: %u", data_type);
-        RCLCPP_INFO(node_->get_logger(), "data_value: %u", data_value);
+        // RCLCPP_INFO(node_->get_logger(), "data_type: %u", data_type);
+        // RCLCPP_INFO(node_->get_logger(), "data_value: %u", data_value);
       }
 
       // create time ref message and put in the data

@@ -196,10 +196,10 @@ void UbloxNode::addFirmwareInterface() {
 
 void UbloxNode::addProductInterface(const std::string & product_category,
                                     const std::string & ref_rov) {
-  if (product_category == "ADR" ||
-             product_category == "UDR") {
+  // if (product_category == "ADR" ||
+  //            product_category == "UDR") {
     components_.push_back(std::make_shared<AdrUdrProduct>(nav_rate_, meas_rate_, frame_id_, updater_, this));
-  } 
+  // } 
 }
 
 
