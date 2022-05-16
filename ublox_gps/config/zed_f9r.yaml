@@ -30,12 +30,7 @@ ublox_gps_node:
                                 # disabled
       min_dur: 300              # Survey-In Minimum Duration [s]
       acc_lim: 3.0              # Survey-In Accuracy Limit [m]
-
-    uart1:
-      baudrate: 19200           # C94-M8P specific
-      in: 32                    # RTCM 3
-      out: 0                    # No UART out for rover
-
+      
     gnss:
       glonass: true             
       beidou: false            
@@ -50,7 +45,9 @@ ublox_gps_node:
     publish:
       all: true
       aid:
-        hui: false
+        hui: true
+      esf:
+        meas: true
 
       nav:
         posecef: false

@@ -30,7 +30,7 @@ AdrUdrProduct::AdrUdrProduct(uint16_t nav_rate, uint16_t meas_rate, const std::s
 {
   if (getRosBoolean(node_, "publish.esf.meas")) {
     imu_pub_ =
-      node_->create_publisher<sensor_msgs::msg::Imu>("imu_meas", 1);
+      node_->create_publisher<sensor_msgs::msg::Imu>("imu", 1);
     time_ref_pub_ =
       node_->create_publisher<sensor_msgs::msg::TimeReference>("interrupt_time", 1);
 
