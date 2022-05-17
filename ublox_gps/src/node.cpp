@@ -224,7 +224,7 @@ void UbloxNode::msgCallback(
     rtcm_ids[j]= msg->data[j];
   }
   // RCLCPP_INFO(this->get_logger(), "\n\n");
-  rtcm_rates.resize(msg->data.size(),1);
+  rtcm_rates.resize(msg->data.size(),4);
 
   // RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs 1: %d", rtcm_ids.size());
   // RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs 2: %d", rtcm_rates.size());
