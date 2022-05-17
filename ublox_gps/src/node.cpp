@@ -246,6 +246,9 @@ void UbloxNode::msgCallback(
     rtcms_[i].rate = rtcm_rates[i];
   }
 
+  if (!gps_->configRtcm(rtcms_)) {
+    throw std::runtime_error("Failed to set RTCM rates");
+  }
 
 }
 
@@ -294,11 +297,7 @@ void UbloxNode::getRosParams() {
   this->get_parameter("rtcm.ids", rtcm_ids);
   this->get_parameter("rtcm.rates", rtcm_rates);
 
-  rtcm_data_stream_sub_ = this->create_subscription<mavros_msgs::msg::RTCM>("/ntrip_client/rtcm", rclcpp::QoS(100),
-          std::bind(&UbloxNode::msgCallback, this, std::placeholders::_1));
 
-  dead_reconk_velocity_data_ = this->create_subscription<geometry_msgs::msg::Twist>("velocity_data", rclcpp::QoS(100),
-          std::bind(&UbloxNode::velmsgCallback, this, std::placeholders::_1));
 
   // PPP: Advanced Setting
   this->declare_parameter("enable_ppp", false);
@@ -485,6 +484,12 @@ void UbloxNode::getRosParams() {
   if (getRosBoolean(this, "publish.aid.hui")) {
     aid_hui_pub_ = this->create_publisher<ublox_msgs::msg::AidHUI>("aidhui", 1);
   }
+
+  rtcm_data_stream_sub_ = this->create_subscription<mavros_msgs::msg::RTCM>("/ntrip_client/rtcm", rclcpp::QoS(100),
+          std::bind(&UbloxNode::msgCallback, this, std::placeholders::_1));
+
+  dead_reconk_velocity_data_ = this->create_subscription<geometry_msgs::msg::Twist>("velocity_data", rclcpp::QoS(100),
+          std::bind(&UbloxNode::velmsgCallback, this, std::placeholders::_1));
 }
 
 void UbloxNode::keepAlive() {
