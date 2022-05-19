@@ -592,6 +592,11 @@ bool Gps::poll(uint8_t class_id, uint8_t message_id,
   return true;
 }
 
+bool Gps::sendRtcm(const std::vector<uint8_t>& rtcm) {
+  worker_->send(rtcm.data(), rtcm.size());
+  return true;
+}
+
 bool Gps::waitForAcknowledge(const std::chrono::milliseconds& timeout,
                              uint8_t class_id, uint8_t msg_id) {
   RCLCPP_DEBUG_EXPRESSION(logger_, debug_ >= 2, "Waiting for ACK 0x%02x / 0x%02x",

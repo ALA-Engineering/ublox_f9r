@@ -104,6 +104,8 @@ class UbloxNode final : public rclcpp::Node {
   std::vector<int64_t> rtcm_ids;
   std::vector<int64_t> rtcm_rates;
 
+  std::vector<uint8_t> rtcm_id;
+
 
   /**
    * @brief Initialize and run the u-blox node.

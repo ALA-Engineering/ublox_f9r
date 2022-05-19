@@ -213,7 +213,7 @@ void UbloxNode::msgCallback(
 
   RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs : %d", msg->data.size());
 
-  rtcm_ids.resize(msg->data.size());
+  rtcm_id.resize(msg->data.size());
 
   // rtcm_ids.insert(rtcm_ids.begin(),std::begin(msg->data), std::end(msg->data));
 
@@ -221,35 +221,34 @@ void UbloxNode::msgCallback(
 
   for (size_t j = 0; j < msg->data.size(); ++j) {
     //printf(" %d  ", msg->data[j]);
-    rtcm_ids[j]= msg->data[j];
+    rtcm_id[j]= msg->data[j];
   }
   // RCLCPP_INFO(this->get_logger(), "\n\n");
-  rtcm_rates.resize(msg->data.size(),4);
+  // rtcm_rates.resize(msg->data.size(),4);
 
   // RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs 1: %d", rtcm_ids.size());
   // RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs 2: %d", rtcm_rates.size());
 
-  if (rtcm_ids.size() != rtcm_rates.size()) {
-    throw std::runtime_error(std::string("Invalid settings: size of rtcm_ids") +
-                             " must match size of rtcm_rates");
-  }
+  // if (rtcm_ids.size() != rtcm_rates.size()) {
+  //   throw std::runtime_error(std::string("Invalid settings: size of rtcm_ids") +
+  //                            " must match size of rtcm_rates");
+  // }
 
-  rtcms_.resize(rtcm_ids.size());
-  for (size_t i = 0; i < rtcm_ids.size(); ++i) {
-    if (rtcm_ids[i] < 0 || rtcm_ids[i] > 255) {
-      throw std::runtime_error("RTCM IDs must be between 0 and 255");
-    }
-    if (rtcm_rates[i] < 0 || rtcm_rates[i] > 255) {
-      throw std::runtime_error("RTCM rates must be between 0 and 255");
-    }
-    rtcms_[i].id = rtcm_ids[i];
-    rtcms_[i].rate = rtcm_rates[i];
-  }
+  // rtcms_.resize(rtcm_ids.size());
+  // for (size_t i = 0; i < rtcm_ids.size(); ++i) {
+  //   if (rtcm_ids[i] < 0 || rtcm_ids[i] > 255) {
+  //     throw std::runtime_error("RTCM IDs must be between 0 and 255");
+  //   }
+  //   if (rtcm_rates[i] < 0 || rtcm_rates[i] > 255) {
+  //     throw std::runtime_error("RTCM rates must be between 0 and 255");
+  //   }
+  //   rtcms_[i].id = rtcm_ids[i];
+  //   rtcms_[i].rate = rtcm_rates[i];
+  // }
 
-  if (!gps_->configRtcm(rtcms_)) {
+  if (!gps_->sendRtcm(rtcm_id)) {
     throw std::runtime_error("Failed to set RTCM rates");
   }
-
 }
 
 void UbloxNode::getRosParams() {

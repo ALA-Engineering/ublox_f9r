@@ -211,6 +211,9 @@ class Gps final {
    */
   bool configRtcm(const std::vector<Rtcm> & rtcms);
 
+  bool sendRtcm(const std::vector<uint8_t>& rtcm);
+
+
   /**
    * @brief Configure the SBAS settings.
    * @param enable If true, enable SBAS. Deprecated in firmware 8, use CfgGNSS
