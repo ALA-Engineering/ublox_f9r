@@ -9,7 +9,7 @@ def generate_launch_description():
             # Declare arguments with default values
             DeclareLaunchArgument('host',         default_value='35.172.10.77'),
             DeclareLaunchArgument('port',         default_value='2101'),
-            DeclareLaunchArgument('mountpoint',   default_value='SCSC'),
+            DeclareLaunchArgument('mountpoint',   default_value='AUL1'),
             DeclareLaunchArgument('authenticate', default_value='True'),
             DeclareLaunchArgument('username',     default_value='ntrip_dev'),
             DeclareLaunchArgument('password',     default_value='EY7opuvk'),

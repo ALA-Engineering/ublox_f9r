@@ -211,7 +211,7 @@ void UbloxNode::velmsgCallback(
 void UbloxNode::msgCallback(
   const mavros_msgs::msg::RTCM::SharedPtr msg) {
 
-  RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs : %d", msg->data.size());
+  //RCLCPP_INFO(this->get_logger(), "U-Blox rtcm msgs : %d", msg->data.size());
 
   rtcm_id.resize(msg->data.size());
 
