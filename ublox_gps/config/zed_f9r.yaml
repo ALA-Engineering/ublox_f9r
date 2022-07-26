@@ -49,4 +49,4 @@ ublox_gps_node:
       esf:
         all: true
       nav:
-        all: true
+        posecef: false
