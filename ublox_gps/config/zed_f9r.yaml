@@ -19,7 +19,7 @@ ublox_gps_node:
                                 # Max Vertical Velocity: 100 m/s
     fix_mode: auto
     enable_ppp: false
-    dr_limit: 0
+    dr_limit: 2
     use_adr: true
 
     # TMODE3 Config
