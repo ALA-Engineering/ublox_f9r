@@ -206,18 +206,19 @@ void UbloxNode::addProductInterface(const std::string & product_category,
 void UbloxNode::velmsgCallback(
   const geometry_msgs::msg::Twist::SharedPtr msg) {
 
-    liner_d.resize(3);
+    liner_d.resize(4);
 
     liner_d[0] = msg->linear.x;
     liner_d[1] = msg->linear.y;
     liner_d[2] = msg->linear.z;
 
-    angular_d.resize(3);
+    angular_d.resize(4);
 
     angular_d[0] = msg->angular.x;
     angular_d[1] = msg->angular.y;
     angular_d[2] = msg->angular.z;
 
+    RCLCPP_DEBUG(this->get_logger(), "Here here velmsgCallback ");
     
 
     if (!gps_->sendSensorFusion(liner_d,angular_d)) 
