@@ -604,7 +604,7 @@ bool Gps::sendSensorFusion(const std::vector<float>& liner,const std::vector<flo
   float deg_per_sec = ::pow(2, -12);
 
   ublox_msgs::msg::EsfMEAS msg;
-  msg.data = (uint32_t*) malloc(6 * sizeof(uint32_t));
+  //msg.data = (uint32_t *) malloc(6 * sizeof(uint32_t));
 
   msg.data[0] = ((uint32_t)liner[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_SPEED & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
 
