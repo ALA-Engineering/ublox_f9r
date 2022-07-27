@@ -208,15 +208,15 @@ void UbloxNode::velmsgCallback(
 
     liner_d.resize(3);
 
-    liner_d[0] = msg.linear.x;
-    liner_d[1] = msg.linear.y;
-    liner_d[2] = msg.linear.z;
+    liner_d[0] = msg->linear.x;
+    liner_d[1] = msg->linear.y;
+    liner_d[2] = msg->linear.z;
 
     angular_d.resize(3);
 
-    angular_d[0] = msg.angular.x;
-    angular_d[1] = msg.angular.y;
-    angular_d[2] = msg.angular.z;
+    angular_d[0] = msg->angular.x;
+    angular_d[1] = msg->angular.y;
+    angular_d[2] = msg->angular.z;
 
     
 
