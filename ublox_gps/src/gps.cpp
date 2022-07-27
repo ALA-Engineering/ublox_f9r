@@ -601,18 +601,18 @@ bool Gps::sendSensorFusion(const std::vector<float>& liner,const std::vector<flo
   
   // worker_->send(rtcm.data(), rtcm.size());
 
-  RCLCPP_DEBUG(this->get_logger(), "Here here sendSensorFusion 1 ");
+  RCLCPP_DEBUG(logger_, "Here here sendSensorFusion 1 ");
   float deg_per_sec = ::pow(2, -12);
 
   ublox_msgs::msg::EsfMEAS msg;
   //msg.data = (uint32_t *) malloc(6 * sizeof(uint32_t));
-  RCLCPP_DEBUG(this->get_logger(), "Here here sendSensorFusion 2 ");
+  RCLCPP_DEBUG(logger_, "Here here sendSensorFusion 2 ");
   msg.data[0] = ((uint32_t)liner[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_SPEED & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
 
   msg.data[1] = ((uint32_t)angular[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_GYRO_ANG_RATE_X & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
   msg.data[2] = ((uint32_t)angular[1] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_GYRO_ANG_RATE_Y & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
 
-  RCLCPP_DEBUG(this->get_logger(), "Here here sendSensorFusion 3 ");
+  RCLCPP_DEBUG(logger_, "Here here sendSensorFusion 3 ");
   return configure(msg);
 }
 
