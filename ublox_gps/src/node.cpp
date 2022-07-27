@@ -223,7 +223,7 @@ void UbloxNode::velmsgCallback(
 
     if (!gps_->sendSensorFusion(liner_d,angular_d)) 
     {
-      throw std::runtime_error("Failed to set velocity messages");
+      //throw std::runtime_error("Failed to set velocity messages");
     }
 
 
