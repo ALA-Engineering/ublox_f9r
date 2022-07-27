@@ -606,10 +606,10 @@ bool Gps::sendSensorFusion(const std::vector<float>& liner,const std::vector<flo
   ublox_msgs::msg::EsfMEAS msg;
   msg.data = (uint32_t*) malloc(6 * sizeof(uint32_t));
 
-  msg.data[0] = (liner[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_SPEED & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
+  msg.data[0] = ((uint32_t)liner[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_SPEED & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
 
-  msg.data[1] = (angular[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_GYRO_ANG_RATE_X & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
-  msg.data[2] = (angular[1] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_GYRO_ANG_RATE_Y & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
+  msg.data[1] = ((uint32_t)angular[0] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_GYRO_ANG_RATE_X & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
+  msg.data[2] = ((uint32_t)angular[1] & ublox_msgs::msg::EsfMEAS::DATA_FIELD_MASK & ublox_msgs::msg::EsfMEAS::DATA_TYPE_SHIFT )|(ublox_msgs::msg::EsfMEAS::DATA_TYPE_GYRO_ANG_RATE_Y & ublox_msgs::msg::EsfMEAS::DATA_TYPE_MASK);
 
   return configure(msg);
 }
