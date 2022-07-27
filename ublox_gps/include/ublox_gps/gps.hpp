@@ -213,6 +213,8 @@ class Gps final {
 
   bool sendRtcm(const std::vector<uint8_t>& rtcm);
 
+  bool sendSensorFusion(const std::vector<float>& liner,const std::vector<float>& angular);
+  
 
   /**
    * @brief Configure the SBAS settings.

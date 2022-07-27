@@ -105,6 +105,9 @@ class UbloxNode final : public rclcpp::Node {
   std::vector<int64_t> rtcm_rates;
 
   std::vector<uint8_t> rtcm_id;
+  std::vector<float> liner_d;
+  std::vector<float> angular_d;
+
 
 
   /**
