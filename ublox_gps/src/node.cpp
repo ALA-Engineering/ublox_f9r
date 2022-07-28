@@ -324,16 +324,16 @@ void UbloxNode::getRosParams() {
   this->get_parameter("rtcm.rates", rtcm_rates);
 
 
-  this->declare_parameter("sensor_fusion", false);
-  if (getRosBoolean(this, "sensor_fusion")) {
+  this->get_parameter("sensor_fusion", enable_sensor_fusion);
+  // if (getRosBoolean(this, "sensor_fusion")) {
 
-    enable_sensor_fusion = true;
-    RCLCPP_WARN(this->get_logger(), "getRosBoolean sensor_fusion ");
-  }
-  else
-  {
-    enable_sensor_fusion = false;
-  }
+  //   enable_sensor_fusion = true;
+  //   RCLCPP_WARN(this->get_logger(), "getRosBoolean sensor_fusion ");
+  // }
+  // else
+  // {
+  //   enable_sensor_fusion = false;
+  // }
 
   // PPP: Advanced Setting
   this->declare_parameter("enable_ppp", false);
