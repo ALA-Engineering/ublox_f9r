@@ -206,24 +206,30 @@ void UbloxNode::addProductInterface(const std::string & product_category,
 void UbloxNode::velmsgCallback(
   const geometry_msgs::msg::Twist::SharedPtr msg) {
 
-    liner_d.resize(4);
+    if(enable_sensor_fusion)
+      liner_d.resize(4);
 
-    liner_d[0] = msg->linear.x;
-    liner_d[1] = msg->linear.y;
-    liner_d[2] = msg->linear.z;
+      liner_d[0] = msg->linear.x;
+      liner_d[1] = msg->linear.y;
+      liner_d[2] = msg->linear.z;
 
-    angular_d.resize(4);
+      angular_d.resize(4);
 
-    angular_d[0] = msg->angular.x;
-    angular_d[1] = msg->angular.y;
-    angular_d[2] = msg->angular.z;
+      angular_d[0] = msg->angular.x;
+      angular_d[1] = msg->angular.y;
+      angular_d[2] = msg->angular.z;
 
-    RCLCPP_DEBUG(this->get_logger(), "Here here velmsgCallback ");
-    
+      RCLCPP_DEBUG(this->get_logger(), "Here here velmsgCallback ");
+      
 
-    if (!gps_->sendSensorFusion(liner_d,angular_d)) 
+      if (!gps_->sendSensorFusion(liner_d,angular_d)) 
+      {
+        //throw std::runtime_error("Failed to set velocity messages");
+      }
+    }
+    else
     {
-      //throw std::runtime_error("Failed to set velocity messages");
+      RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false in the .yaml file , so the sensor fusion will not work ");
     }
 
 
@@ -318,6 +324,16 @@ void UbloxNode::getRosParams() {
   this->get_parameter("rtcm.rates", rtcm_rates);
 
 
+  this->declare_parameter("sensor_fusion", false);
+  if (getRosBoolean(this, "sensor_fusion")) {
+
+    enable_sensor_fusion = true;
+    RCLCPP_WARN(this->get_logger(), "getRosBoolean sensor_fusion ");
+  }
+  else
+  {
+    enable_sensor_fusion = false;
+  }
 
   // PPP: Advanced Setting
   this->declare_parameter("enable_ppp", false);
