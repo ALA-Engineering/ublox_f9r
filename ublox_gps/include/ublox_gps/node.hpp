@@ -108,7 +108,7 @@ class UbloxNode final : public rclcpp::Node {
   std::vector<float> liner_d;
   std::vector<float> angular_d;
 
-  bool enable_sensor_fusion;
+  bool enable_sensor_fusion{0};
 
 
   /**

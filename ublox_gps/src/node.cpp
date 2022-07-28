@@ -324,7 +324,10 @@ void UbloxNode::getRosParams() {
   this->get_parameter("rtcm.rates", rtcm_rates);
 
 
+  this->declare_parameter("sensor_fusion", false);
+
   this->get_parameter("sensor_fusion", enable_sensor_fusion);
+
   // if (getRosBoolean(this, "sensor_fusion")) {
 
   //   enable_sensor_fusion = true;
