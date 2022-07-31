@@ -20,6 +20,8 @@
 #include <ublox_gps/component_interface.hpp>
 #include <ublox_gps/gps.hpp>
 
+uint8_t calculate_imu_offset;
+
 namespace ublox_node {
 
 /**
@@ -61,7 +63,7 @@ class AdrUdrProduct final : public virtual ComponentInterface {
    */
   void subscribe(std::shared_ptr<ublox_gps::Gps> gps) override;
 
-  uint8_t calculate_imu_offset;
+  
 
  private:
   //! Whether or not to enable dead reckoning
