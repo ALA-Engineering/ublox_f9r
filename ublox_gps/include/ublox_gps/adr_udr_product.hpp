@@ -61,6 +61,8 @@ class AdrUdrProduct final : public virtual ComponentInterface {
    */
   void subscribe(std::shared_ptr<ublox_gps::Gps> gps) override;
 
+  uint8_t calculate_imu_offset;
+
  private:
   //! Whether or not to enable dead reckoning
   bool use_adr_;
@@ -81,6 +83,13 @@ class AdrUdrProduct final : public virtual ComponentInterface {
 
   uint16_t nav_rate_;
   uint16_t meas_rate_;
+
+  
+  sensor_msgs::msg::Imu calculated_imu_;
+
+  int32_t counter_;
+
+  sensor_msgs::msg::Imu offset_imu_;
 
   std::string frame_id_;
   std::shared_ptr<diagnostic_updater::Updater> updater_;

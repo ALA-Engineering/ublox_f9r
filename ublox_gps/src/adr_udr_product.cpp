@@ -120,7 +120,10 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
     float deg_per_sec = ::pow(2, -12);
     float m_per_sec_sq = ::pow(2, -10);
 
+    counter_ = 1;
     std::vector<unsigned int> imu_data = m.data;
+
+    
     for (unsigned int datapoint : imu_data) {
       unsigned int data_type = datapoint >> 24; //grab the last six bits of data
       double data_sign = (datapoint & (1 << 23)); //grab the sign (+/-) of the rest of the data
@@ -140,42 +143,56 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
 
       if (data_type == 14) {
         if (data_sign == 1) {
-	  imu_.angular_velocity.x = 2048 - data_value * deg_per_sec;
+	        imu_.angular_velocity.x = 2048 - data_value * deg_per_sec;
         } else {
           imu_.angular_velocity.x = data_sign * data_value * deg_per_sec;
         }
+
+        
+
       } else if (data_type == 16) {
         //RCLCPP_INFO(node_->get_logger(), "data_sign: %f", data_sign);
         //RCLCPP_INFO(node_->get_logger(), "data_value: %u", data_value * m);
         if (data_sign == 1) {
-	  imu_.linear_acceleration.x = 8191 - data_value * m_per_sec_sq;
+	        imu_.linear_acceleration.x = 8191 - data_value * m_per_sec_sq;
         } else {
           imu_.linear_acceleration.x = data_sign * data_value * m_per_sec_sq;
         }
+        
       } else if (data_type == 13) {
         if (data_sign == 1) {
-	  imu_.angular_velocity.y = 2048 - data_value * deg_per_sec;
+	        imu_.angular_velocity.y = 2048 - data_value * deg_per_sec;
         } else {
           imu_.angular_velocity.y = data_sign * data_value * deg_per_sec;
         }
+
+        
+
       } else if (data_type == 17) {
         if (data_sign == 1) {
-	  imu_.linear_acceleration.y = 8191 - data_value * m_per_sec_sq;
+	      imu_.linear_acceleration.y = 8191 - data_value * m_per_sec_sq;
         } else {
           imu_.linear_acceleration.y = data_sign * data_value * m_per_sec_sq;
         }
+        
+
       } else if (data_type == 5) {
         if (data_sign == 1) {
-	  imu_.angular_velocity.z = 2048 - data_value * deg_per_sec;
+	      imu_.angular_velocity.z = 2048 - data_value * deg_per_sec;
         } else {
           imu_.angular_velocity.z = data_sign * data_value * deg_per_sec;
         }
+        
+
       } else if (data_type == 18) {
         if (data_sign == 1) {
-	  imu_.linear_acceleration.z = 8191 - data_value * m_per_sec_sq;
+	      imu_.linear_acceleration.z = 8191 - data_value * m_per_sec_sq;
         } else {
           imu_.linear_acceleration.z = data_sign * data_value * m_per_sec_sq;
         }
+
+       
+
       } else if (data_type == 12) {
         // RCLCPP_INFO("Temperature in celsius: %f", data_value * deg_c);
       } else {
@@ -193,6 +210,29 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
       //std::ostringstream src;
       //src << "TIM" << int(m.ch);
       //t_ref_.source = src.str();
+
+      if(calculate_imu_offset==1)
+      {
+        calculated_imu_.angular_velocity.x = imu_.angular_velocity.x + calculated_imu_.angular_velocity.x;
+        calculated_imu_.linear_acceleration.x = imu_.linear_acceleration.x + calculated_imu_.linear_acceleration.x;
+        calculated_imu_.angular_velocity.y = imu_.angular_velocity.y + calculated_imu_.angular_velocity.y;
+        calculated_imu_.linear_acceleration.y = imu_.linear_acceleration.y + calculated_imu_.linear_acceleration.y;
+        calculated_imu_.angular_velocity.z = imu_.angular_velocity.z + calculated_imu_.angular_velocity.z;
+        calculated_imu_.linear_acceleration.z = imu_.linear_acceleration.z + calculated_imu_.linear_acceleration.z;
+        counter_ = counter_ + 1;
+      }
+      else if(calculate_imu_offset == 2)
+      {
+
+        imu_.angular_velocity.x = imu_.angular_velocity.x + (calculated_imu_.angular_velocity.x/counter_);
+        imu_.linear_acceleration.x = imu_.linear_acceleration.x + (calculated_imu_.linear_acceleration.x/counter_);
+        imu_.angular_velocity.y = imu_.angular_velocity.y + (calculated_imu_.angular_velocity.y/counter_);
+        imu_.linear_acceleration.y = imu_.linear_acceleration.y + (calculated_imu_.linear_acceleration.y/counter_);
+        imu_.angular_velocity.z = imu_.angular_velocity.z + (calculated_imu_.angular_velocity.z/counter_);
+        imu_.linear_acceleration.z = imu_.linear_acceleration.z + (calculated_imu_.linear_acceleration.z/counter_);
+
+      }
+
 
       t_ref_.header.stamp = node_->now(); // create a new timestamp
       t_ref_.header.frame_id = frame_id_;
