@@ -211,7 +211,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
       //src << "TIM" << int(m.ch);
       //t_ref_.source = src.str();
 
-      if(gps->calculate_imu_offset==1)
+      if(calculate_imu_offset==1)
       {
         calculated_imu_.angular_velocity.x = imu_.angular_velocity.x + calculated_imu_.angular_velocity.x;
         calculated_imu_.linear_acceleration.x = imu_.linear_acceleration.x + calculated_imu_.linear_acceleration.x;
@@ -221,7 +221,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
         calculated_imu_.linear_acceleration.z = imu_.linear_acceleration.z + calculated_imu_.linear_acceleration.z;
         counter_ = counter_ + 1;
       }
-      else if(gps->calculate_imu_offset == 2)
+      else if(calculate_imu_offset == 2)
       {
 
         imu_.angular_velocity.x = imu_.angular_velocity.x + (calculated_imu_.angular_velocity.x/counter_);

@@ -54,6 +54,8 @@
 #include <geometry_msgs/msg/twist.hpp>
 
 
+uint8_t calculate_imu_offset =0;
+
 // This file also declares UbloxNode which is the main class and ros node. It
 // implements functionality which applies to any u-blox device, regardless of
 // the firmware version or product type.  The class is designed in compositional
