@@ -228,7 +228,7 @@ void UbloxNode::velmsgCallback(
         //throw std::runtime_error("Failed to set velocity messages");
       }
 
-      calculate_imu_offset = 0;
+      gps_->calculate_imu_offset = 0;
 
     }
     else
@@ -237,13 +237,13 @@ void UbloxNode::velmsgCallback(
 
       if(msg->linear.x ==0 && msg->linear.y ==0 && msg->angular.z==0 )
       {
-        calculate_imu_offset = 1;
+        gps_->calculate_imu_offset = 1;
         RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false and velocity data 0 , going imu calibrate mode");
 
       }
       else
       {
-        calculate_imu_offset = 2;
+        gps_->calculate_imu_offset = 2;
 
         RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false and velocity data non zero , adding imu to the offset");
 

@@ -20,7 +20,7 @@
 #include <ublox_gps/component_interface.hpp>
 #include <ublox_gps/gps.hpp>
 
-uint8_t calculate_imu_offset;
+
 
 namespace ublox_node {
 

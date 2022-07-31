@@ -73,6 +73,8 @@ class Gps final {
   //! Size of write buffer for output messages
   constexpr static int kWriterSize = 2056;
 
+  uint8_t calculate_imu_offset = 0;
+
   explicit Gps(int debug, const rclcpp::Logger & logger);
   ~Gps();
 
@@ -477,6 +479,7 @@ class Gps final {
    */
   bool saveOnShutdown();
 
+  
   //! Processes I/O stream data
   std::shared_ptr<Worker> worker_;
   //! Whether or not the I/O port has been configured

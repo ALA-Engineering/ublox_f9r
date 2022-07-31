@@ -73,6 +73,7 @@ class ComponentInterface {
    * @brief Subscribe to u-blox messages and publish to ROS topics.
    */
   virtual void subscribe(std::shared_ptr<ublox_gps::Gps> gps) = 0;
+
 };
 
 }  // namespace ublox_node
