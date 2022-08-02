@@ -48,6 +48,8 @@
 
 
 extern uint8_t calculate_imu_offset ;
+extern uint8_t calculate_imu_done;
+
 /**
  * @namespace ublox_gps
  * This namespace is for I/O communication with the u-blox device, including

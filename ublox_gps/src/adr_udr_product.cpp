@@ -228,7 +228,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
       else if(calculate_imu_offset == 2)
       {
 
-
+        calculate_imu_done = 1;
         // RCLCPP_INFO(node_->get_logger(), "counter_: %d", counter_);
         // RCLCPP_INFO(node_->get_logger(), "imu_.angular_velocity.x: %f", imu_.angular_velocity.x);
         // RCLCPP_INFO(node_->get_logger(), "calculated_imu_.angular_velocity.x: %f", calculated_imu_.angular_velocity.x);
