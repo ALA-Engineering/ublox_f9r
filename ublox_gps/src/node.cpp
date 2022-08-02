@@ -235,7 +235,7 @@ void UbloxNode::velmsgCallback(
     {
       RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false in the .yaml file , so the sensor fusion will not work ");
 
-      if(msg->linear.x ==0 && msg->linear.y ==0 && msg->angular.z==0 )
+      if(msg->linear.x ==0.0f && msg->linear.y ==0.0f && msg->angular.z==0.0f )
       {
         calculate_imu_offset = 1;
         RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false and velocity data 0 , going imu calibrate mode");

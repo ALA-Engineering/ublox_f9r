@@ -28,6 +28,8 @@ namespace ublox_node {
 AdrUdrProduct::AdrUdrProduct(uint16_t nav_rate, uint16_t meas_rate, const std::string & frame_id, std::shared_ptr<diagnostic_updater::Updater> updater, rclcpp::Node* node)
   : use_adr_(false), nav_rate_(nav_rate), meas_rate_(meas_rate), frame_id_(frame_id), updater_(updater), node_(node)
 {
+
+  counter_ = 1;
   //if (getRosBoolean(node_, "publish.esf.meas")) {
     imu_pub_ =
       node_->create_publisher<sensor_msgs::msg::Imu>("imu", 1);
@@ -120,7 +122,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
     float deg_per_sec = ::pow(2, -12);
     float m_per_sec_sq = ::pow(2, -10);
 
-    counter_ = 1;
+    
     std::vector<unsigned int> imu_data = m.data;
 
     
@@ -211,7 +213,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
       //src << "TIM" << int(m.ch);
       //t_ref_.source = src.str();
 
-      if(calculate_imu_offset==1)
+      if(calculate_imu_offset == 1)
       {
         calculated_imu_.angular_velocity.x = imu_.angular_velocity.x + calculated_imu_.angular_velocity.x;
         calculated_imu_.linear_acceleration.x = imu_.linear_acceleration.x + calculated_imu_.linear_acceleration.x;
@@ -220,9 +222,16 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
         calculated_imu_.angular_velocity.z = imu_.angular_velocity.z + calculated_imu_.angular_velocity.z;
         calculated_imu_.linear_acceleration.z = imu_.linear_acceleration.z + calculated_imu_.linear_acceleration.z;
         counter_ = counter_ + 1;
+        RCLCPP_INFO(node_->get_logger(), "1counter_: %d", counter_);
+
       }
       else if(calculate_imu_offset == 2)
       {
+
+
+        RCLCPP_INFO(node_->get_logger(), "counter_: %d", counter_);
+        RCLCPP_INFO(node_->get_logger(), "imu_.angular_velocity.x: %f", imu_.angular_velocity.x);
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.angular_velocity.x: %f", calculated_imu_.angular_velocity.x);
 
         imu_.angular_velocity.x = imu_.angular_velocity.x + (calculated_imu_.angular_velocity.x/counter_);
         imu_.linear_acceleration.x = imu_.linear_acceleration.x + (calculated_imu_.linear_acceleration.x/counter_);
