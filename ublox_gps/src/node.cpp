@@ -202,6 +202,15 @@ void UbloxNode::addProductInterface(const std::string & product_category,
   // } 
 }
 
+void timeout_fun(const boost::system::error_code& /*e*/)
+{
+  // if (!error)
+  // {
+    std::cout << "timeout function " << std::endl;
+
+    calculate_imu_offset = 2;
+  // }
+}
 
 void UbloxNode::velmsgCallback(
   const geometry_msgs::msg::Twist::SharedPtr msg) {
@@ -238,6 +247,12 @@ void UbloxNode::velmsgCallback(
       if(msg->linear.x ==0.0f && msg->linear.y ==0.0f && msg->angular.z==0.0f )
       {
         calculate_imu_offset = 1;
+        
+        boost::asio::steady_timer t(io, std::chrono::steady_clock::now() + boost::asio::chrono::seconds(5));
+
+        t.async_wait(&timeout_fun);
+
+         io.run();
         // RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false and velocity data 0 , going imu calibrate mode");
 
       }
@@ -544,6 +559,8 @@ void UbloxNode::getRosParams() {
 
   rtcm_data_stream_sub_ = this->create_subscription<mavros_msgs::msg::RTCM>("/ntrip_client/rtcm", rclcpp::QoS(100),
           std::bind(&UbloxNode::msgCallback, this, std::placeholders::_1));
+
+  
 
   dead_reconk_velocity_data_ = this->create_subscription<geometry_msgs::msg::Twist>("velocity_data", rclcpp::QoS(100),
           std::bind(&UbloxNode::velmsgCallback, this, std::placeholders::_1));

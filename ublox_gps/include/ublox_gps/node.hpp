@@ -34,6 +34,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <boost/asio.hpp>
 // ROS includes
 #include <diagnostic_updater/diagnostic_updater.hpp>
 #include <rclcpp/rclcpp.hpp>
@@ -309,6 +310,8 @@ class UbloxNode final : public rclcpp::Node {
 
   rclcpp::TimerBase::SharedPtr keep_alive_;
   rclcpp::TimerBase::SharedPtr poller_;
+
+  boost::asio::io_context io;
 };
 
 }  // namespace ublox_node

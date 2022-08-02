@@ -240,14 +240,16 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
         imu_.angular_velocity.z = imu_.angular_velocity.z + (calculated_imu_.angular_velocity.z/counter_);
         imu_.linear_acceleration.z = imu_.linear_acceleration.z + (calculated_imu_.linear_acceleration.z/counter_);
 
+      
+
+
+        t_ref_.header.stamp = node_->now(); // create a new timestamp
+        t_ref_.header.frame_id = frame_id_;
+
+        time_ref_pub_->publish(t_ref_);
+        imu_pub_->publish(imu_);
+
       }
-
-
-      t_ref_.header.stamp = node_->now(); // create a new timestamp
-      t_ref_.header.frame_id = frame_id_;
-
-      time_ref_pub_->publish(t_ref_);
-      imu_pub_->publish(imu_);
     }
   //}
 
