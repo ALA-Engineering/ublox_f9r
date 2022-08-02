@@ -3,7 +3,8 @@ ublox_gps_node:
     debug: 1                    # Range 0-4 (0 means no debug statements will print)
     sensor_fusion: false        # false set, it will work as rtcm mode and will ignore /velocity_data
                                 # true  set,  rtcm mode will not work  and will take  /velocity_data
-    save:
+    imu_offset: false
+                                
       mask: 3103                # Save I/O, Message, INF Message, Nav, Receiver
                                 # Manager, Antenna, and Logging Configuration
       device: 4                 # Save to EEPROM

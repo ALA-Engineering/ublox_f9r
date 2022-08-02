@@ -49,6 +49,7 @@
 
 extern uint8_t calculate_imu_offset ;
 extern uint8_t calculate_imu_done;
+extern uint8_t imu_offset_flag;
 
 /**
  * @namespace ublox_gps

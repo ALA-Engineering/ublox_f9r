@@ -233,13 +233,15 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
         // RCLCPP_INFO(node_->get_logger(), "imu_.angular_velocity.x: %f", imu_.angular_velocity.x);
         // RCLCPP_INFO(node_->get_logger(), "calculated_imu_.angular_velocity.x: %f", calculated_imu_.angular_velocity.x);
 
-        imu_.angular_velocity.x = imu_.angular_velocity.x + (calculated_imu_.angular_velocity.x/counter_);
-        imu_.linear_acceleration.x = imu_.linear_acceleration.x + (calculated_imu_.linear_acceleration.x/counter_);
-        imu_.angular_velocity.y = imu_.angular_velocity.y + (calculated_imu_.angular_velocity.y/counter_);
-        imu_.linear_acceleration.y = imu_.linear_acceleration.y + (calculated_imu_.linear_acceleration.y/counter_);
-        imu_.angular_velocity.z = imu_.angular_velocity.z + (calculated_imu_.angular_velocity.z/counter_);
-        imu_.linear_acceleration.z = imu_.linear_acceleration.z + (calculated_imu_.linear_acceleration.z/counter_);
-
+        if(imu_offset_flag == 1)
+        {
+          imu_.angular_velocity.x = imu_.angular_velocity.x + (calculated_imu_.angular_velocity.x/counter_);
+          imu_.linear_acceleration.x = imu_.linear_acceleration.x + (calculated_imu_.linear_acceleration.x/counter_);
+          imu_.angular_velocity.y = imu_.angular_velocity.y + (calculated_imu_.angular_velocity.y/counter_);
+          imu_.linear_acceleration.y = imu_.linear_acceleration.y + (calculated_imu_.linear_acceleration.y/counter_);
+          imu_.angular_velocity.z = imu_.angular_velocity.z + (calculated_imu_.angular_velocity.z/counter_);
+          imu_.linear_acceleration.z = imu_.linear_acceleration.z + (calculated_imu_.linear_acceleration.z/counter_);
+        }
       
 
 

@@ -371,6 +371,21 @@ void UbloxNode::getRosParams() {
     enable_sensor_fusion = false;
   }
 
+  this->declare_parameter("imu_offset",false);
+
+  // this->get_parameter("imu_offset", enable_sensor_fusion);
+
+  if (getRosBoolean(this, "imu_offset")) {
+
+    imu_offset_flag = 1;
+    RCLCPP_WARN(this->get_logger(), "getRosBoolean imu_offset ");
+  }
+  else
+  {
+    imu_offset_flag = 0;
+  }
+
+
   // PPP: Advanced Setting
   this->declare_parameter("enable_ppp", false);
   if (getRosBoolean(this, "enable_ppp")) {

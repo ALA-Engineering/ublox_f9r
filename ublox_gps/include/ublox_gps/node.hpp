@@ -57,6 +57,7 @@
 
 uint8_t calculate_imu_offset =0;
 uint8_t calculate_imu_done =0;
+uint8_t imu_offset_flag = 0;
 
 // This file also declares UbloxNode which is the main class and ros node. It
 // implements functionality which applies to any u-blox device, regardless of
