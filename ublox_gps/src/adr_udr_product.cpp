@@ -265,7 +265,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
           offset_pub_imu_.linear_acceleration.y = (calculated_imu_.linear_acceleration.y/counter_);
           offset_pub_imu_.linear_acceleration.z = (calculated_imu_.linear_acceleration.z/counter_);
 
-          RCLCPP_INFO(node_->get_logger(), "counter_: %d", counter_);
+          // RCLCPP_INFO(node_->get_logger(), "counter_: %d", counter_);
 
         }
     

@@ -1,7 +1,7 @@
 ublox_gps_node:
   ros__parameters:
     debug: 1                    # Range 0-4 (0 means no debug statements will print)
-    sensor_fusion: true        # false set, it will work as rtcm mode and will ignore /velocity_data
+    sensor_fusion: false        # false set, it will work as rtcm mode and will ignore /velocity_data
                                 # true  set,  rtcm mode will not work  and will take  /velocity_data
     imu_offset: true
     save:                            

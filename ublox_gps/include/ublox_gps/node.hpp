@@ -314,6 +314,8 @@ class UbloxNode final : public rclcpp::Node {
   rclcpp::TimerBase::SharedPtr poller_;
 
   boost::asio::io_context io;
+
+  bool timer_flag= false;
 };
 
 }  // namespace ublox_node
