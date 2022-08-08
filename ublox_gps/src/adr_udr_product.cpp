@@ -274,7 +274,7 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
 
         time_ref_pub_->publish(t_ref_);
         imu_pub_->publish(imu_);
-        imu_pub_->publish(offset_pub_imu_);
+        imu_pub_offset_->publish(offset_pub_imu_);
 
 
       }
