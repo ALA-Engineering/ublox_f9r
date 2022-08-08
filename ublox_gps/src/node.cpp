@@ -257,6 +257,10 @@ void UbloxNode::velmsgCallback(
 
           io.run();
         }
+        else
+        {
+          RCLCPP_DEBUG(this->get_logger(), "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+        }
         // RCLCPP_DEBUG(this->get_logger(), "sensor_fusion flag is false and velocity data 0 , going imu calibrate mode");
 
       }
