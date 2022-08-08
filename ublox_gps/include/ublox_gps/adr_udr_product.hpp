@@ -83,11 +83,16 @@ class AdrUdrProduct final : public virtual ComponentInterface {
   rclcpp::Publisher<ublox_msgs::msg::EsfSTATUS>::SharedPtr esf_status_pub_;
   rclcpp::Publisher<ublox_msgs::msg::HnrPVT>::SharedPtr hnr_pvt_pub_;
 
+  rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_pub_offset_;
+
+
   uint16_t nav_rate_;
   uint16_t meas_rate_;
 
   
   sensor_msgs::msg::Imu calculated_imu_;
+
+  sensor_msgs::msg::Imu offset_pub_imu_;
 
   int32_t counter_;
 

@@ -33,6 +33,10 @@ AdrUdrProduct::AdrUdrProduct(uint16_t nav_rate, uint16_t meas_rate, const std::s
   //if (getRosBoolean(node_, "publish.esf.meas")) {
     imu_pub_ =
       node_->create_publisher<sensor_msgs::msg::Imu>("imu", 1);
+
+    imu_pub_offset_ =
+      node_->create_publisher<sensor_msgs::msg::Imu>("imu_offset", 1);
+
     time_ref_pub_ =
       node_->create_publisher<sensor_msgs::msg::TimeReference>("interrupt_time", 1);
 
@@ -222,7 +226,17 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
         calculated_imu_.angular_velocity.z = imu_.angular_velocity.z + calculated_imu_.angular_velocity.z;
         calculated_imu_.linear_acceleration.z = imu_.linear_acceleration.z + calculated_imu_.linear_acceleration.z;
         counter_ = counter_ + 1;
-        // RCLCPP_INFO(node_->get_logger(), "1counter_: %d", counter_);
+        RCLCPP_INFO(node_->get_logger(), "counter_: %d", counter_);
+
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.angular_velocity.x: %f", calculated_imu_.angular_velocity.x);
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.angular_velocity.y: %f", calculated_imu_.angular_velocity.y);
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.angular_velocity.z: %f", calculated_imu_.angular_velocity.z);
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.linear_acceleration.x: %f", calculated_imu_.linear_acceleration.x);
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.linear_acceleration.y: %f", calculated_imu_.linear_acceleration.y);
+        RCLCPP_INFO(node_->get_logger(), "calculated_imu_.linear_acceleration.z: %f", calculated_imu_.linear_acceleration.z);
+
+
+
 
       }
       else if(calculate_imu_offset == 2)
@@ -241,15 +255,27 @@ void AdrUdrProduct::callbackEsfMEAS(const ublox_msgs::msg::EsfMEAS &m) {
           imu_.linear_acceleration.y = imu_.linear_acceleration.y + (calculated_imu_.linear_acceleration.y/counter_);
           imu_.angular_velocity.z = imu_.angular_velocity.z + (calculated_imu_.angular_velocity.z/counter_);
           imu_.linear_acceleration.z = imu_.linear_acceleration.z + (calculated_imu_.linear_acceleration.z/counter_);
+        
+
+          offset_pub_imu_.angular_velocity.x = (calculated_imu_.angular_velocity.x/counter_);
+          offset_pub_imu_.angular_velocity.y = (calculated_imu_.angular_velocity.y/counter_);
+          offset_pub_imu_.angular_velocity.z = (calculated_imu_.angular_velocity.z/counter_);
+
+          offset_pub_imu_.linear_acceleration.x = (calculated_imu_.linear_acceleration.x/counter_);
+          offset_pub_imu_.linear_acceleration.y = (calculated_imu_.linear_acceleration.y/counter_);
+          offset_pub_imu_.linear_acceleration.z = (calculated_imu_.linear_acceleration.z/counter_);
+
+          RCLCPP_INFO(node_->get_logger(), "counter_: %d", counter_);
+
         }
-      
-
-
+    
         t_ref_.header.stamp = node_->now(); // create a new timestamp
         t_ref_.header.frame_id = frame_id_;
 
         time_ref_pub_->publish(t_ref_);
         imu_pub_->publish(imu_);
+        imu_pub_->publish(offset_pub_imu_);
+
 
       }
     }
