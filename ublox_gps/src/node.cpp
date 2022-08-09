@@ -206,9 +206,16 @@ void timeout_fun(const boost::system::error_code& /*e*/)
 {
   // if (!error)
   // {
-    std::cout << "timeout function " << std::endl;
+    std::cout << "timeout function -------------------------------------" << std::endl;
 
     calculate_imu_offset = 2;
+    calculate_imu_done = 1;
+    // RCLCPP_INFO(this->get_logger(), "calculate_imu_offset: %d", calculate_imu_offset);
+
+    printf("calculate_imu_offset  %d \n", calculate_imu_offset );
+
+    std::cout << "timeout function ++++++++++++++++++++++++++++++++++++++++" << std::endl;
+
   // }
 }
 
@@ -377,6 +384,7 @@ void UbloxNode::getRosParams() {
   else
   {
     enable_sensor_fusion = false;
+    RCLCPP_WARN(this->get_logger(), "getRosBoolean sensor_fusion false");
   }
 
   this->declare_parameter("imu_offset",false);
